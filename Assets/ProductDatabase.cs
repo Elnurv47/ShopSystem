@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ProductDatabase : MonoBehaviour
@@ -9,8 +10,5 @@ public class ProductDatabase : MonoBehaviour
         Instance = this;
     }
 
-    public Product Iron;
-    public Product Gold;
-    public Product Wood;
-    public Product Phone;
+    public List<Product> Products;
 }

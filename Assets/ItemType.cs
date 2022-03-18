@@ -4,4 +4,5 @@ public enum ItemType
     Iron,
     Gold,
     Pickaxe,
+    Phone
 }

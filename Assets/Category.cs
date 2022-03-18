@@ -4,19 +4,14 @@ using UnityEngine;
 [Serializable]
 public class Category
 {
-    private CategoryUI _categoryUI;
-
     [SerializeField] private string _name;
+
+    public event EventHandler<ProductAddedEventArgs> OnProductAdded;
 
     public string Name { get => _name; }
 
-    public void SetCategoryUI(CategoryUI categoryUI)
+    public void Add(Product product)
     {
-        _categoryUI = categoryUI;
-    }
-
-    public void Add(GameObject productUIObject)
-    {
-        _categoryUI.Add(productUIObject);
+        OnProductAdded?.Invoke(this, new ProductAddedEventArgs(product));
     }
 }

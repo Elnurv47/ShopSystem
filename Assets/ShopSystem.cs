@@ -7,7 +7,8 @@ public class ShopSystem : MonoBehaviour
     private List<Product> _products;
     private List<Category> _categories;
 
-    [SerializeField] private GameObject _productUIPrefab;
+    private IShopCustomer _shopCustomer;
+
     [SerializeField] private List<CategoryUI> _categoryUIList;
 
     private void Awake()
@@ -22,20 +23,24 @@ public class ShopSystem : MonoBehaviour
             _categoryUIList
             .Select(categoryUI => categoryUI.Category)
         );
+
+        List<Product> products = ProductDatabase.Instance.Products;
+
+        products.ForEach(product => AddProduct(product));
+    }
+
+    public void SetShopCustomer(IShopCustomer shopCustomer)
+    {
+        _shopCustomer = shopCustomer;
     }
 
     public void AddProduct(Product product)
     {
         _products.Add(product);
-        GameObject spawnedProductUIObject = Instantiate(_productUIPrefab);
-
-        ProductUI spawnedProductUI = spawnedProductUIObject.GetComponent<ProductUI>();
-
-        spawnedProductUI.SetProduct(product);
 
         Category appropriateCategory = FindAppropriateCategory(product);
 
-        appropriateCategory.Add(spawnedProductUIObject);
+        appropriateCategory.Add(product);
     }
 
     private Category FindAppropriateCategory(Product product)
