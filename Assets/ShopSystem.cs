@@ -9,6 +9,8 @@ public class ShopSystem : MonoBehaviour
 
     private IShopCustomer _shopCustomer;
 
+    public IShopCustomer ShopCustomer { get => _shopCustomer; set => _shopCustomer = value; }
+
     [SerializeField] private List<CategoryUI> _categoryUIList;
 
     private void Awake()
@@ -27,11 +29,6 @@ public class ShopSystem : MonoBehaviour
         List<Product> products = ProductDatabase.Instance.Products;
 
         products.ForEach(product => AddProduct(product));
-    }
-
-    public void SetShopCustomer(IShopCustomer shopCustomer)
-    {
-        _shopCustomer = shopCustomer;
     }
 
     public void AddProduct(Product product)

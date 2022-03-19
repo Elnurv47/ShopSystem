@@ -1,29 +1,26 @@
-using System;
 using UnityEngine;
 using UnityEngine.UI;
-
-public class ProductBoughtEventArgs : EventArgs
-{
-    private Product _product;
-
-    public Product Product {
-        get => _product;
-        private set => _product = value;
-    }
-
-    public ProductBoughtEventArgs(Product product)
-    {
-        Product = product;
-    }
-}
 
 public class ProductUI : MonoBehaviour
 {
     private Product _product;
+    private IShopCustomer _shopCustomer;
 
     [SerializeField] private Text _headerText;
     [SerializeField] private Image _image;
     [SerializeField] private Text _priceText;
+    [SerializeField] private Button _buyButton;
+
+    private void Start()
+    {
+        _shopCustomer = GetComponentInParent<ShopSystem>().ShopCustomer;
+        _shopCustomer.OnCoinChanged += ShopCustomer_OnCoinChanged;
+    }
+
+    private void ShopCustomer_OnCoinChanged(object sender, CoinChangedEventArgs e)
+    {
+        _buyButton.interactable = _shopCustomer.CanBuy(_product);
+    }
 
     public void SetProduct(Product product)
     {
@@ -40,6 +37,6 @@ public class ProductUI : MonoBehaviour
 
     public void OnBuyButtonClicked()
     {
-
+        _shopCustomer.HandleBoughtProduct(_product);
     }
 }
