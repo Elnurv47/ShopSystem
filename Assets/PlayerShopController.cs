@@ -1,28 +1,6 @@
 using System;
 using UnityEngine;
 
-public class CoinChangedEventArgs : EventArgs
-{
-    private int _coinAmount;
-
-    public int CoinAmount { get => _coinAmount; private set => _coinAmount = value; }
-
-    public CoinChangedEventArgs(int coinAmount)
-    {
-        CoinAmount = coinAmount;
-    }
-}
-
-public interface IShopCustomer
-{
-    int GetCoinAmount();
-    void SetCoinAmount(int newAmount);
-    void HandleBoughtProduct(Product product);
-    bool CanBuy(Product product);
-
-    event EventHandler<CoinChangedEventArgs> OnCoinChanged;
-}
-
 public class PlayerShopController : MonoBehaviour, IShopCustomer
 {
     private int _coinAmount = 200;
